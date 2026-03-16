@@ -181,16 +181,6 @@ npm run start
 
 ---
 
-## 🌍 Deployment (Vercel)
-
-The fastest way to deploy:
-
-1. Push your code to GitHub
-2. Go to [vercel.com](https://vercel.com) → "Add New Project"
-3. Import your GitHub repo
-4. Click **Deploy** — Vercel auto-detects Next.js
-
-Every push to `main` triggers an automatic redeploy.
 
 ---
 
