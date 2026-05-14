@@ -8,3 +8,7 @@ node_modules/
 .next/
 .env*.local
 .DS_Store
+
+# FFmpeg binaries
+ffmpeg-8.1.1-essentials_build/
+ffmpeg-8.1.1-essentials_build.zip

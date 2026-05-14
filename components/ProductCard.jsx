@@ -5,12 +5,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useCart } from "@/context/CartContext";
-import { ShoppingCart, Star, Check, Sparkles } from "lucide-react";
+import { ShoppingCart, Star, Check, Sparkles, Leaf } from "lucide-react";
 
 export default function ProductCard({ product, index = 0 }) {
   const { addToCart } = useCart();
   const [isAdded, setIsAdded] = useState(false);
-  const [imageError, setImageError] = useState(false);
+  const [imgError, setImgError] = useState(false);
 
   const handleAddToCart = (e) => {
     e.preventDefault();
@@ -43,33 +43,17 @@ export default function ProductCard({ product, index = 0 }) {
               transition={{ duration: 0.3 }}
               className="w-full h-full"
             >
-              {product.video ? (
-                <video
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  className="w-full h-full object-cover"
-                >
-                  <source src={product.video} type="video/mp4" />
-                </video>
-              ) : !imageError ? (
+              {product.image && !imgError ? (
                 <Image
                   src={product.image}
                   alt={product.name}
                   fill
                   className="object-cover"
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                  onError={() => setImageError(true)}
+                  onError={() => setImgError(true)}
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/20 to-accent/20">
-                  <div className="text-center p-4">
-                    <div className="w-16 h-16 mx-auto mb-2 rounded-full bg-primary/10 flex items-center justify-center">
-                      <Sparkles className="h-8 w-8 text-primary" />
-                    </div>
-                    <span className="text-sm text-muted-foreground">{product.name}</span>
-                  </div>
+                  <Leaf className="h-16 w-16 text-primary/40" />
                 </div>
               )}
             </motion.div>
