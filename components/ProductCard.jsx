@@ -41,13 +41,14 @@ export default function ProductCard({ product, index = 0 }) {
             <motion.div
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.3 }}
-              className="w-full h-full"
+              className="relative w-full h-full"
             >
               {product.image && !imgError ? (
                 <Image
                   src={product.image}
                   alt={product.name}
                   fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                   className="object-cover"
                   onError={() => setImgError(true)}
                 />

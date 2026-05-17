@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Leaf, Facebook, Instagram, Twitter, Mail, Phone, MapPin } from "lucide-react";
@@ -25,7 +26,12 @@ const socialLinks = [
 ];
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
+  // Fix: use a stable year that matches between server and client
+  const [currentYear, setCurrentYear] = useState(2025);
+
+  useEffect(() => {
+    setCurrentYear(new Date().getFullYear());
+  }, []);
 
   return (
     <footer className="bg-foreground text-card" role="contentinfo">

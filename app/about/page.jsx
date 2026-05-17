@@ -1,7 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
+import { cloudinaryVideoSources } from "@/lib/cloudinary";
 import { 
   Leaf, 
   Recycle, 
@@ -156,24 +158,24 @@ export default function AboutPage() {
                 <div className="space-y-4">
                   <div className="aspect-[4/5] rounded-2xl overflow-hidden">
                     <video autoPlay muted loop playsInline className="w-full h-full object-cover">
-                      <source src="/videos/mission1.mp4" type="video/mp4" />
+                      <source src={cloudinaryVideoSources("arsoap/videos/mission1").mp4} type="video/mp4" />
                     </video>
                   </div>
                   <div className="aspect-square rounded-2xl overflow-hidden">
                     <video autoPlay muted loop playsInline className="w-full h-full object-cover">
-                      <source src="/videos/mission2.mp4" type="video/mp4" />
+                      <source src={cloudinaryVideoSources("arsoap/videos/mission2").mp4} type="video/mp4" />
                     </video>
                   </div>
                 </div>
                 <div className="space-y-4 pt-8">
                   <div className="aspect-square rounded-2xl overflow-hidden">
                     <video autoPlay muted loop playsInline className="w-full h-full object-cover">
-                      <source src="/videos/mission3.mp4" type="video/mp4" />
+                      <source src={cloudinaryVideoSources("arsoap/videos/mission3").mp4} type="video/mp4" />
                     </video>
                   </div>
                   <div className="aspect-[4/5] rounded-2xl overflow-hidden">
                     <video autoPlay muted loop playsInline className="w-full h-full object-cover">
-                      <source src="/videos/mission4.mp4" type="video/mp4" />
+                      <source src={cloudinaryVideoSources("arsoap/videos/mission4").mp4} type="video/mp4" />
                     </video>
                   </div>
                 </div>
@@ -316,11 +318,13 @@ export default function AboutPage() {
                 className="group"
               >
                 <div className="bg-background rounded-2xl overflow-hidden border border-border hover:shadow-lg transition-shadow">
-                  <div className="aspect-square overflow-hidden">
-                    <img
+                  <div className="aspect-square overflow-hidden relative">
+                    <Image
                       src={member.image}
                       alt={member.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      fill
+                      sizes="(max-width: 640px) 50vw, 25vw"
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                   </div>
                   <div className="p-4 text-center">

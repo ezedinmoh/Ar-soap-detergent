@@ -19,7 +19,10 @@ export default function Header() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const pathname = usePathname();
-  const { cartCount } = useCart();
+  const { cartCount, isLoaded } = useCart();
+
+  // Use 0 until cart is loaded from localStorage — prevents hydration mismatch
+  const displayCount = isLoaded ? cartCount : 0;
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -128,16 +131,16 @@ export default function Header() {
                 className="relative p-2 text-foreground hover:text-primary transition-colors"
               >
                 <ShoppingCart className="h-5 w-5" aria-hidden="true" />
-                {cartCount > 0 && (
+                {displayCount > 0 && (
                   <motion.span
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center"
                   >
-                    {cartCount > 99 ? "99+" : cartCount}
+                    {displayCount > 99 ? "99+" : displayCount}
                   </motion.span>
                 )}
-                <span className="sr-only">Shopping cart with {cartCount} items</span>
+                <span className="sr-only">Shopping cart with {displayCount} items</span>
               </motion.div>
             </Link>
 
@@ -161,12 +164,12 @@ export default function Header() {
                 className="relative p-2 text-foreground"
               >
                 <ShoppingCart className="h-5 w-5" aria-hidden="true" />
-                {cartCount > 0 && (
+                {displayCount > 0 && (
                   <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
-                    {cartCount}
+                    {displayCount}
                   </span>
                 )}
-                <span className="sr-only">Shopping cart with {cartCount} items</span>
+                <span className="sr-only">Shopping cart with {displayCount} items</span>
               </motion.div>
             </Link>
 

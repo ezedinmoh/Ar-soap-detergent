@@ -16,12 +16,14 @@ import {
 import { products, categories } from "@/lib/data";
 import ProductCard from "@/components/ProductCard";
 
+import { cloudinaryVideoSources } from "@/lib/cloudinary";
+
 const categoryVideos = {
   "All": null,
-  "Soaps": "/videos/soap1.mp4",
-  "Detergents": "/videos/detergent1.mp4",
-  "Laundry Aids": "/videos/laundry1.mp4",
-  "Specialty Items": "/videos/specialty1.mp4",
+  "Soaps": cloudinaryVideoSources("arsoap/videos/soap1"),
+  "Detergents": cloudinaryVideoSources("arsoap/videos/detergent1"),
+  "Laundry Aids": cloudinaryVideoSources("arsoap/videos/laundry1"),
+  "Specialty Items": cloudinaryVideoSources("arsoap/videos/specialty1"),
 };
 
 const sortOptions = [
@@ -127,7 +129,7 @@ function ProductsContent() {
               transition={{ duration: 0.6 }}
               className="absolute inset-0 w-full h-full object-cover"
             >
-              <source src={categoryVideos[selectedCategory]} type="video/mp4" />
+              <source src={categoryVideos[selectedCategory].mp4} type="video/mp4" />
             </motion.video>
           ) : (
             <motion.div

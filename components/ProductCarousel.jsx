@@ -7,8 +7,9 @@ import ProductCard from "./ProductCard";
 
 export default function ProductCarousel({ products, title = "Featured Products" }) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [itemsPerPage, setItemsPerPage] = useState(4);
+  const [itemsPerPage, setItemsPerPage] = useState(4); // safe default — overwritten after mount
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -24,6 +25,7 @@ export default function ProductCarousel({ products, title = "Featured Products" 
     };
 
     handleResize();
+    setIsMounted(true);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -43,6 +45,25 @@ export default function ProductCarousel({ products, title = "Featured Products" 
     const interval = setInterval(nextSlide, 5000);
     return () => clearInterval(interval);
   }, [isAutoPlaying, nextSlide]);
+
+  // Render skeleton until client has measured the viewport
+  // All hooks are already called above — this is safe
+  if (!isMounted) {
+    return (
+      <section className="py-12 lg:py-16" aria-label={title}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="font-serif text-2xl lg:text-3xl font-bold text-foreground mb-8">
+            {title}
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {products.slice(0, 4).map((product) => (
+              <div key={product.id} className="bg-card rounded-2xl h-80 animate-pulse border border-border" />
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   const visibleProducts = products.slice(currentIndex, currentIndex + itemsPerPage);
   

@@ -6,14 +6,18 @@ import { useState, useEffect, useRef } from "react";
 import { ArrowRight, Leaf, Droplets, Recycle, Heart, Star, Quote } from "lucide-react";
 import { products, testimonials } from "@/lib/data";
 import ProductCarousel from "@/components/ProductCarousel";
+import { cloudinaryVideoSources } from "@/lib/cloudinary";
 
-const heroVideos = [
-  "/videos/hero1.mp4",
-  "/videos/hero2.mp4",
-  "/videos/hero3.mp4",
-  "/videos/hero4.mp4",
-  "/videos/hero5.mp4",
+const heroVideoIds = [
+  "arsoap/videos/hero1",
+  "arsoap/videos/hero2",
+  "arsoap/videos/hero3",
+  "arsoap/videos/hero4",
+  "arsoap/videos/hero5",
 ];
+
+// Pre-build sources at module level — no repeated calls on render
+const heroVideos = heroVideoIds.map((id) => cloudinaryVideoSources(id));
 
 const features = [
   {
@@ -166,7 +170,7 @@ export default function HomePage() {
                       transition={{ duration: 0.8 }}
                       className="w-full h-full object-cover"
                     >
-                      <source src={heroVideos[currentVideo]} type="video/mp4" />
+                      <source src={heroVideos[currentVideo].mp4} type="video/mp4" />
                     </motion.video>
                   </AnimatePresence>
 
@@ -271,7 +275,7 @@ export default function HomePage() {
                   playsInline
                   className="w-full h-full object-cover"
                 >
-                  <source src="/videos/aboutarsoap.mp4" type="video/mp4" />
+                  <source src={cloudinaryVideoSources("arsoap/videos/aboutarsoap").mp4} type="video/mp4" />
                 </video>
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/30 to-transparent" />
               </div>

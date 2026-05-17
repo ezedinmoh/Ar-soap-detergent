@@ -145,7 +145,7 @@ export default function CartPage() {
                             playsInline
                             className="w-full h-full object-cover"
                           >
-                            <source src={item.video} type="video/mp4" />
+                            <source src={item.video.mp4} type="video/mp4" />
                           </video>
                         ) : !imageErrors[item.id] ? (
                           <Image
