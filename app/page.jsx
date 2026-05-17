@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect, useRef } from "react";
+import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
 import { ArrowRight, Leaf, Droplets, Recycle, Heart, Star, Quote } from "lucide-react";
 import { products, testimonials } from "@/lib/data";
 import ProductCarousel from "@/components/ProductCarousel";
@@ -59,12 +59,11 @@ const staggerContainer = {
 export default function HomePage() {
   const bestsellers = products.filter((p) => p.bestseller);
   const [currentVideo, setCurrentVideo] = useState(0);
-  const videoRef = useRef(null);
 
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentVideo((prev) => (prev + 1) % heroVideos.length);
-    }, 4000);
+    }, 6000); // 6 seconds per video (4s + 2s extra as requested)
     return () => clearInterval(timer);
   }, []);
 
@@ -157,22 +156,23 @@ export default function HomePage() {
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-3xl transform rotate-6" />
                 <div className="absolute inset-0 bg-gradient-to-tr from-accent/20 to-primary/20 rounded-3xl transform -rotate-3" />
                 <div className="relative bg-card rounded-3xl overflow-hidden shadow-2xl aspect-square">
-                  <AnimatePresence mode="wait">
+                  {/* All videos stacked — only the current one is visible.
+                      No unmounting = no white flash between transitions. */}
+                  {heroVideos.map((video, i) => (
                     <motion.video
-                      key={currentVideo}
-                      ref={videoRef}
+                      key={i}
                       autoPlay
                       muted
                       playsInline
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.8 }}
-                      className="w-full h-full object-cover"
+                      loop
+                      animate={{ opacity: i === currentVideo ? 1 : 0 }}
+                      transition={{ duration: 1.2, ease: "easeInOut" }}
+                      className="absolute inset-0 w-full h-full object-cover"
+                      style={{ zIndex: i === currentVideo ? 1 : 0 }}
                     >
-                      <source src={heroVideos[currentVideo].mp4} type="video/mp4" />
+                      <source src={video.mp4} type="video/mp4" />
                     </motion.video>
-                  </AnimatePresence>
+                  ))}
 
                   {/* Slide dots */}
                   <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
